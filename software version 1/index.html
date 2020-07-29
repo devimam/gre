@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+	<head>
+		<meta charset="utf-8">
+		<title>GRE Words</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	</head>
+	
+	<body>
+		<script src="myscript.js"></script>
+	  	<div class="container">
+		  <h2>GRE Words For Practice</h2>
+		  <p>Collection of Words from Barron's 800 Essential words, Magoosh Basic and Common words, Manhattan Text-completion and Sentence Equivalence words</p>
+		  <div class="panel-group">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+				<h4 class="panel-title" style="text-align:center;">
+				  	<a data-toggle="collapse" href="#meaning" id="myword" style="text-decoration: none;display:block;" title="Click Me to Show the Meaning">
+						GRE Practice Word
+						<span class="glyphicon glyphicon-eye-open" style="display:inline-block;padding-left:10px;"></span>
+					</a>
+				</h4>
+			  </div>
+			  <div id="meaning" class="panel-collapse collapse">
+					<div class="panel-body" id="mymeaning">
+				  		GRE Practice Word
+				  	</div>
+			  </div>
+			</div>
+		  </div>
+	  	</div>
+		<div style="text-align:center;">
+			<input type="button" class="btn btn-success" value="<<<<< Next Word >>>>>" onclick="generateNext();">
+		</div>
+		
+		<input type="search" class="form form-control" id="searchval" style="width:100px;display:inline-block;"><button class="btn btn-info" onclick="findMe()"><span class="glyphicon glyphicon-search"></span></button><button class="btn btn-warning" onclick="showAll()">Show All Words</button>
+		<br/>
+		<br/>
+		<table class="table table-striped" style="margin-bottom:0px;padding-bottom:0px;border-bottom:0px;">
+			<thead>
+				<th class="warning" style="text-align:center;">Word</th>
+				<th class="warning" style="text-align: center;">Meaning</th>
+			</thead>
+		</table>
+		<div style="max-height:320px;overflow-y:auto;" style="margin-top:0px;padding-top:0px;border-top:0px;">
+			<table class="table table-striped">
+				<tbody id="content">
+					
+				</tbody>
+			</table>
+		</div>
+		
+		<script>
+			//showAll();
+
+			function showAll(){
+				document.getElementById("content").innerHTML="";
+				var ind;
+				for(ind=0;ind<words.length;ind++){
+					document.getElementById("content").innerHTML+="<tr><td>"+words[ind]+"</td><td>"+meanings[ind]+"</td></tr>";
+				}
+
+			}
+		</script>
+
+		
+		<script>
+			function generateNext(){
+				var randindex=Math.floor(Math.random()*100000)%words.length;
+				console.log(randindex);
+				
+				document.getElementById("myword").innerHTML=words[randindex]+"<span class='glyphicon glyphicon-eye-open' style='display:inline-block;padding-left:10px;'></span>";
+				document.getElementById("mymeaning").innerHTML=meanings[randindex];
+			}
+		</script>
+		
+		<script>
+			function findMe(){
+				var value=document.getElementById("searchval").value;
+				var index=words.indexOf(value.trim());
+				console.log(value+" "+index);
+				
+				if(index>-1){
+					document.getElementById("content").innerHTML="<tr><td>"+words[index]+"</td><td>"+meanings[index]+"</td></tr>";
+				}else{
+					document.getElementById("content").innerHTML="<td colspan='2'>No data found!!!!!!!!!!!!!!!</td>";
+				}
+			}
+		</script>
+		
+		<footer style="background-color: #ff9900;text-align:center;position:fixed;bottom:0px;width:100%;">
+		Copyright: Mohammad Imam Hossain, Email: imambuet11@gmail.com
+		</footer>
+		
+	</body>
+	
+</html>
