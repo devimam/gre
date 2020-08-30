@@ -59,7 +59,7 @@ function loadingwords(minval, maxval, word_array_name, meaning_array_name){
     contentHTML+='<table class="table table-hover"><tbody>';
     ///index number is 1 less than minval/maxval
     for(let i=minval-1;i<maxval;i++){
-        contentHTML+='<tr><td><a data-toggle="collapse" href="#collapseid'+i+'" role="button">'+window[word_array_name][i].toLowerCase()+'</a>';
+        contentHTML+='<tr><td id="'+window[word_array_name][i].toLowerCase()+'"><a data-toggle="collapse" href="#collapseid'+i+'" role="button">'+window[word_array_name][i].toLowerCase()+'</a>';
         contentHTML+='<div class="collapse" data-parent="#myaccordion" id="collapseid'+i+'"><div class="card card-body">'+window[meaning_array_name][i].toLowerCase()+'</div></td></tr>';
     }
     contentHTML += "</tbody></table></div>";
@@ -72,10 +72,10 @@ function loadingwords(minval, maxval, word_array_name, meaning_array_name){
     document.getElementById('randwordmeaning').textContent="See the random word meaning here ... ...";
 
     ///activating the prev, rand, next word buttons
-    document.getElementById('prev').disabled=false;
-    document.getElementById('rand').disabled=false;
-    document.getElementById('next').disabled=false;
-    document.getElementById('searchbtn').disabled=false;
+    document.getElementById('prev').removeAttribute('disabled');
+    document.getElementById('rand').removeAttribute('disabled');
+    document.getElementById('next').removeAttribute('disabled');
+    document.getElementById('searchbtn').removeAttribute('disabled');
 }
 
 ///----------------prev, rend, next button functionalities----------------------
@@ -97,7 +97,8 @@ function getRandomIntInclusive(min, max) {
 }
 
 function prevpos(minval, maxval){
-    var newpos=wordpos-1;
+    var newpos=maxval;
+    if(wordpos!=-1) newpos=wordpos-1;
     ///circular rotation
     if(newpos<minval){
         newpos=maxval;
@@ -107,7 +108,8 @@ function prevpos(minval, maxval){
 }
 
 function nextpos(minval, maxval){
-    var newpos=wordpos+1;
+    var newpos=minval;
+    if(wordpos!=-1) newpos=wordpos+1;
     ///circular rotation
     if(newpos>maxval){
         newpos=minval;
@@ -131,6 +133,7 @@ function genword(e){
     }
     else{
         ///if the configuration is valid
+        // console.log(minval+" "+maxval);
         if(cat=='rand'){
             wordpos=randompos(minval-1, maxval-1); ///index is 1 less
         }
@@ -139,9 +142,6 @@ function genword(e){
         }
         else if(cat=='next'){
             wordpos=nextpos(minval-1, maxval-1);
-        }
-        else{
-            wordpos=-1;
         }
 
         console.log(cat+" "+wordpos);
@@ -231,9 +231,25 @@ function searchdata(){
     if(pos!=-1){
         console.log('found at position '+pos);
         var parent=document.querySelector('#tablecontainer');
-        parent.scrollTop=(parent.scrollHeight/maxwordcount)*pos; ///calculating the postion of pos-th table row
+        ///parent.scrollTop=(parent.scrollHeight/maxwordcount)*pos; ///calculating the postion of pos-th table row
+        var tdelm = document.getElementById(searchval);
+        var trelm=tdelm.parentNode;
+        if(trelm){
+            var half_window_size = parent.clientHeight/2;
+            parent.scrollTop=trelm.offsetTop-half_window_size+40;
+
+            trelm.classList.add('set-animation');
+            setTimeout(resetAnimation, 3000, trelm);
+        }
+        else{
+            console.log('No elements containing this id is found');
+        }
     }
     else{
-        console.log("Not Found");
+        window.alert("Not Found");
     }
+}
+
+function resetAnimation(trelm){
+    trelm.classList.remove('set-animation');
 }
