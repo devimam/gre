@@ -103,7 +103,11 @@
 					<div class="card mb-3">
 						  <div class="card-header text-info text-center"><h4>Vocabulary Flashcards</h4></div>
 						  <div class="card-body p-0 m-0">
-							  <div class="row p-3 justify-content-center">
+							  <div class="row p-3 justify-content-center" style="position:relative;">
+                                <div>
+                                    <button class="btn btn-outline-info" style="position:absolute;top:10px;left:25px;" onclick="speak()"><i class="fa fa-volume-up"></i></button>  
+                                </div>
+                                  
   								<div class="col-auto">
   									<h1 id="randword" class="display-4 text-info">Random</h1>
   								</div>
@@ -164,7 +168,10 @@
 		<script type="text/javascript" src="jswords/allscript.js"></script>
 		<script type="text/javascript" src="jswords/barronscript.js"></script>
 		<script type="text/javascript" src="jswords/magooshscript.js"></script>
-
+        
+        <!-- adding font awesome icons -->
+        <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
+        
 		<!-- adding my own javascript functionalities -->
 		<script type="text/javascript" src="myscript.js"></script>
 	</body>
