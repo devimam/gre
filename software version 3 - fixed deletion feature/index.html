@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+	<head>
+		<!-- Required meta tags -->
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    	<!-- Bootstrap CSS -->
+    	<link rel="stylesheet" href="lib/css/bootstrap.min.css">
+
+		<!-- my css stylesheet -->
+		<link rel="icon" href="myicon.png">
+
+		<title>GRE Flashcards</title>
+		<style>
+			/* The animation code */
+			@keyframes colorset {
+				from {background-color: #b3ffff;}
+				to {background-color: transparent;}
+			}
+
+			.set-animation{
+				animation-name: colorset;
+				animation-duration:3s;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+            <!--heading section-->
+            <h1 class="text-center text-info clearfix">
+				GRE Flashcards
+                
+                <!-- adding the github start feature-->
+                <iframe src="https://ghbtns.com/github-btn.html?user=devimam&repo=gre&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="Star this project" class="float-right mt-3"></iframe>
+            </h1>
+			<hr>
+            
+			<!-- main content area -->
+			<div class="row p-4">
+				<div class="col-12 col-md-5">
+					<!-- first card for configuration -->
+					<div class="card mb-3">
+					  <div class="card-header text-info text-center"><h4>Configuration</h4></div>
+					  <div class="card-body">
+						  <!-- alertbox area -->
+						  <div id="alertbox" class="row"></div>
+						  <form class="row">
+							  <div class="form-group col-12">
+								  <label for="wordlist">Choose Vocabulary</label>
+								  <select class="custom-select" id="wordlist">
+									  <option value="all" checked>All - 1867 words</option>
+									  <option value="barron">Barron's Essential Words - 800 words</option>
+									  <option value="magoosh">Magoosh GRE Vocabulary - 1067 words</option>
+								  </select>
+								  <small id="rangemsg" class="text-muted"></small>
+							  </div>
+
+							  <div class="w-100"></div>
+
+							  <div class="form-group col-6">
+								  <label for="firstword">First Word Number</label>
+								  <input type="number" class="form-control" id="firstword" min="1">
+							  </div>
+
+							  <div class="form-group col-6">
+								  <label for="lastword">Last Word Number</label>
+								  <input type="number" class="form-control" id="lastword" min="1">
+							  </div>
+
+							  <div class="w-100"></div>
+
+							  <div class="col-12">
+								  <input type="button" id="loadvocabulary" class="btn btn-block btn-outline-info" value="Load Vocabulary">
+							  </div>
+						  </form>
+					  </div>
+					</div>
+
+					<!-- second card for word list -->
+					<div class="card mb-3">
+						  <div class="card-header text-info">
+							  <div class="row">
+							  	<h4 class="col-auto mr-auto">Full Vocabulary List</h4>
+
+								<div class="form-inline col-auto">
+	  								<input type="search" class="form-control rounded-0" id='searchval' placeholder="Search here">
+	  								<input type="button" class="btn btn-outline-info rounded-0" id='searchbtn' value="Search" disabled>
+	  							  </div>
+							  </div>
+						  </div>
+						  <div class="card-body p-0 m-0">
+		  					<div class="overflow-auto text-center font-weight-bold pt-2" id="tablecontainer" style="height:40vh;">
+		  						No words loaded ... ...
+		  					</div>
+						  </div>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-7">
+					<div class="card mb-3">
+						  <div class="card-header text-info text-center"><h4>Vocabulary Flashcards</h4></div>
+						  <div class="card-body p-0 m-0">
+							  <div class="row p-3 justify-content-center">
+  								<div class="col-auto">
+  									<h1 id="randword" class="display-4 text-info">Random</h1>
+  								</div>
+  								<div class="w-100 mt-4"></div>
+								<div class="col-12">
+									<a href="#" data-toggle="collapse" data-target="#meaningcollapse">See meaning</a> | <a href="#" id='markword'>Mark this word</a>
+
+									<div class="collapse" id="meaningcollapse">
+									  <div class="card card-body font-weight-bold" id='randwordmeaning'>
+									    See the random word meaning here ... ...
+									  </div>
+									</div>
+								</div>
+							   </div>
+							   <div class="row p-3 justify-content-center">
+								   <input type="button" class="btn btn-outline-info col-md-3 mx-auto" id="prev" value="<<< Prev Word" disabled>
+								   <input type="button" class="btn btn-outline-info col-md-4 mx-auto" id="rand" value="<<< Random Word >>>" disabled>
+								   <input type="button" class="btn btn-outline-info col-md-3 mx-auto" id="next" value="Next Word >>>" disabled>
+							   </div>
+							   <br>
+							   <div class="row p-3 mb-3">
+								   <div class="col-12">
+								   		<h4>Marked Words <small class="text-muted">(for current session)</small></h4>
+								   </div>
+								   <div class="w-100"></div>
+								   <div class="col-12">
+									   <div class="overflow-auto border border-info clearfix" id="markedword" style="height:300px;">
+
+									   </div>
+									   <br>
+									   <div class="font-weight-bold border border-info text-center" id="markedmeaning" style="min-height:30px;">
+
+									   </div>
+								   </div>
+
+							   </div>
+						  </div>
+					</div>
+				</div>
+			</div>
+
+			<!--footer-->
+			<div class="row justify-content-center">
+				<div class="col-auto text-center text-info">
+					MIT License &copy; 2020 <strong>Mohammad Imam Hossain</strong> | Email: <strong><a href="mailto:imambuet11@gmail.com" class="text-info">imambuet11@gmail.com</a></strong> | All Rights Reserved
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Optional JavaScript -->
+    	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    	<script src="lib/js/bootstrap.min.js"></script>
+
+		<!-- uploading word lists-->
+		<script type="text/javascript" src="jswords/allscript.js"></script>
+		<script type="text/javascript" src="jswords/barronscript.js"></script>
+		<script type="text/javascript" src="jswords/magooshscript.js"></script>
+
+		<!-- adding my own javascript functionalities -->
+		<script type="text/javascript" src="myscript.js"></script>
+	</body>
+</html>
