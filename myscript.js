@@ -254,3 +254,11 @@ function searchdata(){
 function resetAnimation(trelm){
     trelm.classList.remove('set-animation');
 }
+
+
+// adding text to speech feature
+function speak(){
+    var txt=document.getElementById('randword').textContent;
+    var uttr=new SpeechSynthesisUtterance(txt);
+    window.speechSynthesis.speak(uttr);
+}
