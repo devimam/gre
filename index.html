@@ -1,264 +1,178 @@
-///---------------------------initial words list with wordcounts----------------
-var wordlist={
-    list: ['all', 'barron', 'magoosh'],
-    wordcount: [1867, 800, 1067]
-};
+<!DOCTYPE html>
 
-///----------------------------configuration section----------------------------
+<html lang="en" dir="ltr">
+	<head>
+		<!-- Required meta tags -->
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-///listening events to track the word list change event
-document.getElementById("wordlist").addEventListener("change", setrangevalue);
+    	<!-- Bootstrap CSS -->
+    	<link rel="stylesheet" href="lib/css/bootstrap.min.css">
 
-function setrangevalue(){
-    var sel_value=document.getElementById('wordlist').value;
-    var ind = wordlist.list.indexOf(sel_value);
-    var maxwordcount=wordlist.wordcount[ind];
+		<!-- my css stylesheet -->
+		<link rel="icon" href="myicon.png">
 
-    document.getElementById("firstword").value=1;
-    document.getElementById("firstword").max=maxwordcount;
+		<title>GRE Flashcards</title>
+		<style>
+			/* The animation code */
+			@keyframes colorset {
+				from {background-color: #b3ffff;}
+				to {background-color: transparent;}
+			}
 
-    document.getElementById("lastword").value=maxwordcount;
-    document.getElementById("lastword").max=maxwordcount;
+			.set-animation{
+				animation-name: colorset;
+				animation-duration:3s;
+			}
+		</style>
+	</head>
 
-    document.getElementById('rangemsg').textContent="Choose words between 1 to "+maxwordcount+" range.";
-}
+	<body>
+		<div class="container-fluid">
+            <!--heading section-->
+            <h1 class="text-center text-info clearfix">
+				GRE Flashcards
+                
+                <!-- adding the github start feature-->
+                <iframe src="https://ghbtns.com/github-btn.html?user=devimam&repo=gre&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="Star this project" class="float-right mt-3"></iframe>
+            </h1>
+			<hr>
+            
+			<!-- main content area -->
+			<div class="row p-4">
+				<div class="col-12 col-md-5">
+					<!-- first card for configuration -->
+					<div class="card mb-3">
+					  <div class="card-header text-info text-center"><h4>Configuration</h4></div>
+					  <div class="card-body">
+						  <!-- alertbox area -->
+						  <div id="alertbox" class="row"></div>
+						  <form class="row">
+							  <div class="form-group col-12">
+								  <label for="wordlist">Choose Vocabulary</label>
+								  <select class="custom-select" id="wordlist">
+									  <option value="all" checked>All - 1867 words</option>
+									  <option value="barron">Barron's Essential Words - 800 words</option>
+									  <option value="magoosh">Magoosh GRE Vocabulary - 1067 words</option>
+								  </select>
+								  <small id="rangemsg" class="text-muted"></small>
+							  </div>
 
-///calling first time to set the initial word list and corresponding max-min values
-setrangevalue();
+							  <div class="w-100"></div>
 
+							  <div class="form-group col-6">
+								  <label for="firstword">First Word Number</label>
+								  <input type="number" class="form-control" id="firstword" min="1">
+							  </div>
 
+							  <div class="form-group col-6">
+								  <label for="lastword">Last Word Number</label>
+								  <input type="number" class="form-control" id="lastword" min="1">
+							  </div>
 
+							  <div class="w-100"></div>
 
-///---------------------------loading vocabulary words--------------------------
+							  <div class="col-12">
+								  <input type="button" id="loadvocabulary" class="btn btn-block btn-outline-info" value="Load Vocabulary">
+							  </div>
+						  </form>
+					  </div>
+					</div>
 
-// listening events to catch the load word button operation
-document.getElementById("loadvocabulary").addEventListener("click", loadvocabulary);
+					<!-- second card for word list -->
+					<div class="card mb-3">
+						  <div class="card-header text-info">
+							  <div class="row">
+							  	<h4 class="col-auto mr-auto">Full Vocabulary List</h4>
 
-function loadvocabulary(){
-    var sel_value=document.getElementById('wordlist').value;
-    var word_array_name=sel_value+"words"; ///the words array name is "barronwords" for barron word list.
-    var meaning_array_name=sel_value+"meanings";
-    var ind = wordlist.list.indexOf(sel_value);
-    var maxwordcount=wordlist.wordcount[ind];
+								<div class="form-inline col-auto">
+	  								<input type="search" class="form-control rounded-0" id='searchval' placeholder="Search here">
+	  								<input type="button" class="btn btn-outline-info rounded-0" id='searchbtn' value="Search" disabled>
+	  							  </div>
+							  </div>
+						  </div>
+						  <div class="card-body p-0 m-0">
+		  					<div class="overflow-auto text-center font-weight-bold pt-2" id="tablecontainer" style="height:40vh;">
+		  						No words loaded ... ...
+		  					</div>
+						  </div>
+					</div>
+				</div>
 
-    var minval=parseInt(document.getElementById('firstword').value);
-    var maxval=parseInt(document.getElementById('lastword').value);
-    if(isNaN(minval) || isNaN(maxval) || minval>maxval || minval>maxwordcount || maxval>maxwordcount){
-        document.getElementById('alertbox').innerHTML='<div class="alert alert-danger alert-dismissible fade show col-12" role="alert"><strong>ERROR!!!!</strong> Invalid first or, last word number.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
-    }
-    else{
-        document.getElementById('tablecontainer').innerHTML='<div class="spinner-grow text-warning" role="status"></div> <div class="spinner-grow text-info" role="status"></div> <div class="spinner-grow text-success" role="status"></div>';
+				<div class="col-12 col-md-7">
+					<div class="card mb-3">
+						  <div class="card-header text-info text-center"><h4>Vocabulary Flashcards</h4></div>
+						  <div class="card-body p-0 m-0">
+							  <div class="row p-3 justify-content-center" style="position:relative;">
+                                <div>
+                                    <button class="btn btn-outline-info" style="position:absolute;top:10px;left:25px;" onclick="speak()"><i class="fa fa-volume-up"></i></button>  
+                                </div>
+                                  
+  								<div class="col-auto">
+  									<h1 id="randword" class="display-4 text-info">Random</h1>
+  								</div>
+  								<div class="w-100 mt-4"></div>
+								<div class="col-12">
+									<a href="#" data-toggle="collapse" data-target="#meaningcollapse">See meaning</a> | <a href="#" id='markword'>Mark this word</a>
 
-        ///giving 2 sec delay for showing the loading icons
-        setTimeout(loadingwords, 2000, minval, maxval, word_array_name, meaning_array_name);
-    }
-}
+									<div class="collapse" id="meaningcollapse">
+									  <div class="card card-body font-weight-bold" id='randwordmeaning'>
+									    See the random word meaning here ... ...
+									  </div>
+									</div>
+								</div>
+							   </div>
+							   <div class="row p-3 justify-content-center">
+								   <input type="button" class="btn btn-outline-info col-md-3 mx-auto" id="prev" value="<<< Prev Word" disabled>
+								   <input type="button" class="btn btn-outline-info col-md-4 mx-auto" id="rand" value="<<< Random Word >>>" disabled>
+								   <input type="button" class="btn btn-outline-info col-md-3 mx-auto" id="next" value="Next Word >>>" disabled>
+							   </div>
+							   <br>
+							   <div class="row p-3 mb-3">
+								   <div class="col-12">
+								   		<h4>Marked Words <small class="text-muted">(for current session)</small></h4>
+								   </div>
+								   <div class="w-100"></div>
+								   <div class="col-12">
+									   <div class="overflow-auto border border-info clearfix" id="markedword" style="height:300px;">
 
-function loadingwords(minval, maxval, word_array_name, meaning_array_name){
-    var contentHTML='<div class="accordion" id="myaccordion">';
-    contentHTML+='<table class="table table-hover"><tbody>';
-    ///index number is 1 less than minval/maxval
-    for(let i=minval-1;i<maxval;i++){
-        contentHTML+='<tr><td id="'+window[word_array_name][i].toLowerCase()+'"><a data-toggle="collapse" href="#collapseid'+i+'" role="button">'+window[word_array_name][i].toLowerCase()+'</a>';
-        contentHTML+='<div class="collapse" data-parent="#myaccordion" id="collapseid'+i+'"><div class="card card-body">'+window[meaning_array_name][i].toLowerCase()+'</div></td></tr>';
-    }
-    contentHTML += "</tbody></table></div>";
+									   </div>
+									   <br>
+									   <div class="font-weight-bold border border-info text-center" id="markedmeaning" style="min-height:30px;">
 
-    document.getElementById("tablecontainer").innerHTML=contentHTML;
+									   </div>
+								   </div>
 
-    ///reinitializing to random word
-    wordpos=-1;
-    document.getElementById('randword').textContent="Random";
-    document.getElementById('randwordmeaning').textContent="See the random word meaning here ... ...";
+							   </div>
+						  </div>
+					</div>
+				</div>
+			</div>
 
-    ///activating the prev, rand, next word buttons
-    document.getElementById('prev').removeAttribute('disabled');
-    document.getElementById('rand').removeAttribute('disabled');
-    document.getElementById('next').removeAttribute('disabled');
-    document.getElementById('searchbtn').removeAttribute('disabled');
-}
-
-///----------------prev, rend, next button functionalities----------------------
-
-document.getElementById('rand').addEventListener('click', genword);
-document.getElementById('prev').addEventListener('click', genword);
-document.getElementById('next').addEventListener('click', genword);
-
-///wordpos = global variable to track the currently showing words in the flashcard
-var wordpos=-1; ///initial word position
-function randompos(minval, maxval){
-    return getRandomIntInclusive(minval, maxval); ///index is 1 less
-}
-
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
-}
-
-function prevpos(minval, maxval){
-    var newpos=maxval;
-    if(wordpos!=-1) newpos=wordpos-1;
-    ///circular rotation
-    if(newpos<minval){
-        newpos=maxval;
-    }
-
-    return newpos;
-}
-
-function nextpos(minval, maxval){
-    var newpos=minval;
-    if(wordpos!=-1) newpos=wordpos+1;
-    ///circular rotation
-    if(newpos>maxval){
-        newpos=minval;
-    }
-    return newpos;
-}
-
-function genword(e){
-    var cat=e.target.id; ///id will return either prev, rand or next id of HTML
-
-    var sel_value=document.getElementById('wordlist').value;
-    var word_array_name=sel_value+"words";
-    var meaning_array_name=sel_value+"meanings";
-    var ind = wordlist.list.indexOf(sel_value);
-    var maxwordcount=wordlist.wordcount[ind];
-
-    var minval=parseInt(document.getElementById('firstword').value);
-    var maxval=parseInt(document.getElementById('lastword').value);
-    if(isNaN(minval) || isNaN(maxval) || minval>maxval || minval>maxwordcount || maxval>maxwordcount){
-        ///no operation for wrong configuration
-    }
-    else{
-        ///if the configuration is valid
-        // console.log(minval+" "+maxval);
-        if(cat=='rand'){
-            wordpos=randompos(minval-1, maxval-1); ///index is 1 less
-        }
-        else if(cat=='prev'){
-            wordpos=prevpos(minval-1, maxval-1);
-        }
-        else if(cat=='next'){
-            wordpos=nextpos(minval-1, maxval-1);
-        }
-
-        console.log(cat+" "+wordpos);
-        if(wordpos!=-1){
-            document.getElementById('randword').textContent=window[word_array_name][wordpos].toLowerCase();
-            document.getElementById('randwordmeaning').textContent=window[meaning_array_name][wordpos].toLowerCase();
-        }
-        else{
-            document.getElementById('randword').textContent="Random";
-            document.getElementById('randwordmeaning').textContent="See the random word meaning here ... ...";
-        }
-    }
-}
-
-
-///-----------------------marking words for future use--------------------------
-
-var markedwords=[]; ///tracking words to turn off the same word repetition
-document.getElementById('markword').addEventListener('click', addmarkedword);
-
-function addmarkedword(e){
-    e.preventDefault(); ///disabling default link click effect
-
-    var sel_value=document.getElementById('wordlist').value;
-    var word_array_name=sel_value+"words";
-    var meaning_array_name=sel_value+"meanings";
-
-    if(wordpos!=-1){
-        var newword=window[word_array_name][wordpos].toLowerCase();
-        var newwordmeaning=window[meaning_array_name][wordpos].toLowerCase();
-        ///checking whether the word already exists or not
-        if(markedwords.indexOf(newword)==-1){
-            markedwords.push(newword);
-
-            ///adding new word element here
-            var newchild=document.createElement('div');
-            newchild.setAttribute("class","m-2 p-1 border border-info rounded-pill float-left d-inline");
-            newchild.setAttribute("meaning",newwordmeaning);
-            newchild.setAttribute("id", "d-"+newword); ///as repetition is off so same word will appear only one time. No id repetition
-            newchild.innerHTML='<a href="#" onclick="showmarkedwordmeaning(event,\''+newwordmeaning+'\')">'+newword+'</a> <a href="#" class="text-danger font-weight-bold" onclick="removeme(event, \''+"d-"+newword+'\')">&times;</a>';
-
-            var elm=document.getElementById('markedword');
-            elm.appendChild(newchild);
-        }
-        else{
-            console.log('already marked');
-        }
-    }
-    else{
-        console.log("No word");
-    }
-}
-
-function showmarkedwordmeaning(e, newwordmeaning){
-    e.preventDefault();
-    document.getElementById('markedmeaning').textContent=newwordmeaning;
-}
-
-function removeme(e, newword){
-    e.preventDefault();
-    console.log("deleting: "+newword);
-    
-    var me=document.getElementById(newword);
-    var parent=document.getElementById('markedword');
-
-    parent.removeChild(me);
-
-    document.getElementById('markedmeaning').textContent="";
+			<!--footer-->
+			<div class="row justify-content-center">
+				<div class="col-auto text-center text-info">
+					MIT License &copy; 2020 <strong>Mohammad Imam Hossain</strong> | Email: <strong><a href="mailto:imambuet11@gmail.com" class="text-info">imambuet11@gmail.com</a></strong> | All Rights Reserved
+				</div>
+			</div>
+		</div>
 
 
-    var mypos=markedwords.indexOf(newword);
-    markedwords.splice(mypos, 1);
-    console.log(markedwords);
-}
+		<!-- Optional JavaScript -->
+    	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    	<script src="lib/js/bootstrap.min.js"></script>
 
-
-///-------------------search button click event handling------------------------
-
-document.getElementById('searchbtn').addEventListener('click', searchdata);
-
-function searchdata(){
-    var sel_value=document.getElementById('wordlist').value;
-    var word_array_name=sel_value+"words";
-    var maxwordcount=window[word_array_name].length;
-
-    var searchval=document.getElementById('searchval').value;
-    var pos=window[word_array_name].indexOf(searchval);
-    if(pos!=-1){
-        console.log('found at position '+pos);
-        var parent=document.querySelector('#tablecontainer');
-        ///parent.scrollTop=(parent.scrollHeight/maxwordcount)*pos; ///calculating the postion of pos-th table row
-        var tdelm = document.getElementById(searchval);
-        var trelm=tdelm.parentNode;
-        if(trelm){
-            var half_window_size = parent.clientHeight/2;
-            parent.scrollTop=trelm.offsetTop-half_window_size+40;
-
-            trelm.classList.add('set-animation');
-            setTimeout(resetAnimation, 3000, trelm);
-        }
-        else{
-            console.log('No elements containing this id is found');
-        }
-    }
-    else{
-        window.alert("Not Found");
-    }
-}
-
-function resetAnimation(trelm){
-    trelm.classList.remove('set-animation');
-}
-
-
-// adding text to speech feature
-function speak(){
-    var txt=document.getElementById('randword').textContent;
-    var uttr=new SpeechSynthesisUtterance(txt);
-    window.speechSynthesis.speak(uttr);
-}
+		<!-- uploading word lists-->
+		<script type="text/javascript" src="jswords/allscript.js"></script>
+		<script type="text/javascript" src="jswords/barronscript.js"></script>
+		<script type="text/javascript" src="jswords/magooshscript.js"></script>
+        
+        <!-- adding font awesome icons -->
+        <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
+        
+		<!-- adding my own javascript functionalities -->
+		<script type="text/javascript" src="myscript.js"></script>
+	</body>
+</html>
