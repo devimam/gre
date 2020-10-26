@@ -181,7 +181,7 @@ function addmarkedword(e){
             newchild.setAttribute("class","m-2 p-1 border border-info rounded-pill float-left d-inline");
             newchild.setAttribute("meaning",newwordmeaning);
             newchild.setAttribute("id", "d-"+newword); ///as repetition is off so same word will appear only one time. No id repetition
-            newchild.innerHTML='<a href="#" onclick="showmarkedwordmeaning(event,\''+newwordmeaning+'\')">'+newword+'</a> <a href="#" class="text-danger font-weight-bold" onclick="removeme(event, \''+"d-"+newword+'\')">&times;</a>';
+            newchild.innerHTML='<a href="#" onclick="showmarkedwordmeaning(event)">'+newword+'</a> <a href="#" class="text-danger font-weight-bold" onclick="removeme(event, \''+"d-"+newword+'\')">&times;</a>';
 
             var elm=document.getElementById('markedword');
             elm.appendChild(newchild);
@@ -195,9 +195,11 @@ function addmarkedword(e){
     }
 }
 
-function showmarkedwordmeaning(e, newwordmeaning){
+function showmarkedwordmeaning(e){
     e.preventDefault();
-    document.getElementById('markedmeaning').textContent=newwordmeaning;
+	console.log(e.target.parentNode.getAttribute('meaning'));
+	var elmmeaning=e.target.parentNode.getAttribute('meaning');
+    document.getElementById('markedmeaning').textContent=elmmeaning;
 }
 
 function removeme(e, newword){
