@@ -629,9 +629,9 @@ plowed but not sowed; uncultivated
 fatuous
 foolishly self-satisfied
 fauna
-animals of a period o region
+animals of a period or region
 fawning
-seeking flavor by flattering
+seeking favor by flattering
 felicitous
 suitable expressed; wee-chose; appropriate
 feral
@@ -654,7 +654,7 @@ fissure
 crevice
 flag
 to droop; grow weak
-fledging
+fledgling
 beginner; novice
 flora
 plants of a region or era
@@ -1481,7 +1481,7 @@ government by priests representing a god
 thespian
 an actor or actress
 timbre
-voice tone color
+the characteristic quality of sound produced by a particular instrument or voice; tone color
 tirade
 long, violent speech; verbal assault
 toady
